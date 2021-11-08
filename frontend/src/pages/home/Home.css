@@ -1,0 +1,49 @@
+.car-img {
+  height: 90vh;
+}
+.red-section {
+  background-color: #ba1200;
+}
+
+.category-card {
+  width: 100%;
+  height: 250px;
+}
+
+.category-card:hover {
+  opacity: 70%;
+}
+/*  */
+/* .caption-header {
+  font-size: 400%;
+  text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+}
+
+.carousel-caption {
+  transform: translateY(-50%);
+  bottom: initial;
+  height: 100%;
+  top: 50%;
+} */
+
+.square-button {
+  border-radius: 0px;
+}
+
+.caption {
+  position: relative;
+  top: 25%;
+}
+
+.slider {
+  height: 100vh;
+}
+
+@media screen and (max-width: 480px) {
+  .caption-header {
+    font-size: 290%;
+  }
+}

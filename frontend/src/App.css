@@ -1,3 +1,7 @@
 .bg-dark {
-  background-color: #272727 !important;
+  background-color: #000 !important;
+}
+
+.text-red {
+  color: #ba1200;
 }
