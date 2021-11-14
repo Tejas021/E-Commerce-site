@@ -1,5 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { publicRequest } from "../../components/axios";
 import { mobile } from "../../responsive";
+import {useDispatch} from "react-redux";
+import {setUser} from "../../redux_setup/reducers/userRedux"
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -57,14 +61,34 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+  const [loginDetails,setLoginDetails]=useState({username:"",password:""})
+  const dispatch = useDispatch()
+  const handleLogin=async(e)=>{
+    e.preventDefault();
+  
+    try{
+      const user=await publicRequest.post("/auth/login",loginDetails,{withCredentials:true})
+      console.log(user.data)
+      dispatch(  setUser({user:user.data}))
+    }
+    catch(err){
+      console.log(err)
+    }
+
+    
+  }
+
+  const setDetails=(e)=>{
+    setLoginDetails({...loginDetails,[e.target.name]:e.target.value})
+  }
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
+          <Input placeholder="username" name="username" onChange={e=>setDetails(e)}/>
+          <Input placeholder="password" name="password" onChange={e=>setDetails(e)}/>
+          <Button onClick={e=>handleLogin(e)}>LOGIN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>

@@ -1,13 +1,75 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import Product from './Product'
+import {publicRequest} from "../../../components/axios"
 
-const Products = () => {
+const Products = ({cat,sort,filters}) => {
+    
+    const [products, setProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
+    
+useEffect(() => {
+    const getProducts=async()=>{
+     
+        try{
+            const pro =await publicRequest.get(cat?`/products?category=${cat}`:`/products?new=true`)
+            setProducts(pro.data)
+           
+        }
+        catch(err){
+            console.log(err)
+        }
+       
+    }
+    getProducts()
+
+}, [cat])
+useEffect(() => {
+    
+    const getFilteredProducts=()=>{
+      
+       cat&& setFilteredProducts(
+       products
+       .filter(item=>Object.entries(filters).every(([key,value])=>{
+           return item[key].includes(value)
+       })
+       )
+       
+        )}
+getFilteredProducts()
+}, [products,filters,cat])
+
+
+useEffect(() => {
+    const sortProducts=()=>{
+        if(sort==="dsc"){
+            setFilteredProducts(prev=>
+                [...prev].sort((a,b)=>b.price-a.price)
+                )
+        }
+        else if(sort==="asc"){
+            setFilteredProducts(prev=>
+                [...prev].sort((a,b)=>a.price-b.price)
+                )
+        }
+        else{
+            setFilteredProducts(prev=>
+                [...prev].sort((a,b)=>a.createdAt-b.createdAt)
+                )
+        }
+        
+
+    }
+    sortProducts()
+}, [sort])
+
+
     return (
         <div className='container p-md-5'>
+          
            <h2>Products</h2>
            <div className='row'>
-               
-           {[{title:"First",_id:1},{title:"Second",_id:2},{title:"Third",_id:3},{title:"First",_id:4},{title:"Second",_id:5},{title:"Third",_id:6}].map(item=><Product item={item} key={item._id}/>)}
+            
+           {cat?filteredProducts.map(item=><Product item={item} key={item._id}/>):products.map(item=><Product item={item} key={item._id}/>)}
 
            </div>
         </div>

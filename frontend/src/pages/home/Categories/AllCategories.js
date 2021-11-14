@@ -2,25 +2,32 @@ export const Categories=[
     {
         id:1,
         title:"Clothing",
-        img:"https://source.unsplash.com/user/erondu/800x400" 
+        img:"https://images.ctfassets.net/3s5io6mnxfqz/1jW0ClXkocn7TU6RbHnfVk/162bc75700473c6231c5612d13a0f702/AdobeStock_302958346.jpeg?fm=jpg&w=900&fl=progressive" ,
+        cat:"clothing"
     },
     {
         id:2,
         title:"Electronics",
-        img:"https://source.unsplash.com/user/jackie/800x400" 
+       img:"https://www.iitg.ac.in/stud/gymkhana/technical/assets/img/video/Electronics.jpg",
+        cat:"electronics" 
 },
     { 
     id:3,
     title:"Shoes",
-    img:""
+    img:"https://image.shutterstock.com/image-photo/pair-new-black-sneakers-on-260nw-1477074293.jpg",
+    cat:"shoes"
 },
     {id:4,
-    title:"Grocery",
-    img:""},
+    title:"Women",
+    img:"data:image/jpeg;base64,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",
+    cat:"women"
+},
     {id:5,
     title:"Equipments",
-    img:""},
+   img:"https://image.shutterstock.com/image-illustration/drill-wrench-other-construction-tools-260nw-253639291.jpg",
+    cat:"equipments"},
     {id:6,
         title:"Mens",
-        img:""
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTkgwFtCAHbXZNvFz2h2RG5x6qQ_vXlqaCQ&usqp=CAU",
+        cat:"men"
     }]
