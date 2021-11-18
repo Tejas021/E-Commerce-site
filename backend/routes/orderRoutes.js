@@ -6,9 +6,10 @@ const Order = require("../models/Order")
 
 //CREATE ORDER
 
-router.post("/",verifyTokenAndAuthorization,async(req,res)=>{
+router.post("/:id",verifyTokenAndAuthorization,async(req,res)=>{
     const order = new Order(req.body);
     try{
+   
         const savedOrder=await order.save()
         res.status(201).send(savedOrder)
 
@@ -48,12 +49,12 @@ router.delete("/:id",verifyTokenAndAuthorization,async(req,res)=>{
 })
 
 
-//GET SINGLE ORDER
+//GET user ORDER
 
 router.get("/find/:id",verifyTokenAndAuthorization,async(req,res)=>{
     try{
-        const order = await Order.find({userId:req.params.id})
-        res.status(200).send(order)
+        const orders = await Order.find({userId:req.params.id})
+        res.status(200).send(orders)
     }catch(err){
         res.status(500).json(err)
     }

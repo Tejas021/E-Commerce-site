@@ -4,15 +4,9 @@ const Cryptojs = require("crypto-js")
 const jwt = require("jsonwebtoken")
 const {  verifyToken } = require("./verifyToken")
 
-// router.get("/",(req,res)=>{
-//     console.log("called")
-
-//     res.cookie("jwt","dsfsdsafsadfadf")
-//     res.send("hiis")
-// })
 
 router.post("/register",async(req,res)=>{
-    console.log("called")
+
     const newUser = new User({
         username:req.body.username,
         email:req.body.email,

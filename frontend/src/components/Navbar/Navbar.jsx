@@ -23,8 +23,11 @@ const user=useSelector(state=>state.user.userInfo)
              {user?          < > <li className="nav-item ">
                 <Link className="nav-link active mx-3" to="/cart"><i type="button" className="me-auto fa fa-shopping-cart " ><sup className="badge  red-section">{quantity}</sup></i></Link>
               </li>
+              <li className="nav-item ">
+                <Link className="nav-link active mx-3" to="/orders"><i type="button" className="me-auto fa fa-line-chart " ></i></Link>
+              </li>
               <li className="nav-item " onClick={()=>{dispatch(deleteUser());publicRequest.get("/auth/logout",{withCredentials:true})}}>
-               <Link className="nav-link active mx-3" to="/"> LOGOUT</Link>
+               <Link className="nav-link active mx-3" to="/"> <i type="button" className="me-auto 	fa fa-power-off " ></i></Link>
               </li>
               
               </>   :<>

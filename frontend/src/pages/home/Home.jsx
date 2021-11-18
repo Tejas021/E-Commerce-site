@@ -1,6 +1,8 @@
 import React from 'react'
 import Category from './Categories/Category'
+import NewsLetter from '../../components/NewsLetter/NewsLetter';
 
+import Footer from '../../components/Footer/Footer';
 import "./Home.css"
 
 import Products from './Products/Products'
@@ -14,7 +16,11 @@ import Slider from './Slider'
             <Category/>
             </div>
             <Products/>
-           
+            <div className="red-section">
+      <NewsLetter/>
+      </div>
+      
+    <Footer/>
             
            
           

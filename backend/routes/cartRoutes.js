@@ -9,7 +9,7 @@ const CartItem = require("../models/CartItem")
 router.post("/:id",verifyTokenAndAuthorization,async(req,res)=>{
 
     const data={...req.body,userId:req.params.id}
-    console.log(data)
+  
     const cart = new CartItem(data);
     try{
         const savedCart=await cart.save()
@@ -28,7 +28,7 @@ router.post("/:id",verifyTokenAndAuthorization,async(req,res)=>{
 router.get("/:id",verifyTokenAndAuthorization,async(req,res)=>{
     
     try{
-        console.log(req.params.id)
+
         const Items=await CartItem.find({userId:req.params.id})
     res.status(200).send(Items)
     }
@@ -66,6 +66,16 @@ router.post("/delete/:id",verifyTokenAndAuthorization,async(req,res)=>{
         }catch(err){
             res.status(500).json(err)
         }
+})
+
+router.post("/clearCart/:id",verifyTokenAndAuthorization,async(req,res)=>{
+    try{
+     
+        await CartItem.deleteMany({userId:req.body.userId})
+        res.status(200).json("deleted")
+    }catch(err){
+        res.status(500).json(err)
+    }
 })
 
 

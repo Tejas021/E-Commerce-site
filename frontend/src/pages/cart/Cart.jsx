@@ -2,16 +2,28 @@ import React,{useState,useEffect} from 'react'
 import CartProduct from './CartProduct'
 import "./Cart.css"
 import {useHistory} from "react-router-dom"
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import StripeCheckout from "react-stripe-checkout";
 import {userRequest} from "../../components/axios"
+import { clearCart } from '../../redux_setup/reducers/cartApiCalls'
+import NewsLetter from '../../components/NewsLetter/NewsLetter';
+
+import Footer from '../../components/Footer/Footer';
 // import {initializeCart} from "../../redux_setup/reducers/cartRedux"
 const Cart = () => {
-    // const dispatch = useDispatch()
+  const dispatch = useDispatch()
     const cart = useSelector(state=>state.cart)
-    // const user = useSelector(state=>state.user.userInfo)
+    const user = useSelector(state=>state.user.userInfo)
+   
+
+
+    // {
+    //   userId:"",products:[],amount:0,address:"",status:"pending"
+
+    // }
+
  const KEY= "pk_test_51JtvykSJAlTDVo3t11qzgOuHpkm0u8vG1sdztNYIKsoHNrO2Dt0fpmd58d4zpEkaOPTN3jq0n8JHl68qwKD7c5w600m26hnVl0"
- console.log(KEY)
+
     const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
 
@@ -20,33 +32,51 @@ const Cart = () => {
     
   };
 
-  useEffect(() => {
+
+  useEffect(()=>{
     const makeRequest = async () => {
- 
-        const res = await userRequest.post("/checkout/payment", {
+     
+      console.log("called")
+      try{
+        await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: 500,
+          amount:cart.total*100
+        }).then(res=>res.data).then(async res=>{
+          let body={userId:user._id,products:cart.products,amount:cart.total,status:"pending",address:res.source.country}
+          await userRequest.post(`/orders/${user._id}`,body,{withCredentials:true})
+       
+        clearCart(dispatch,user)
+
+        }
+        )
+        
+
+         
+        history.push({
+          pathname:"/success",
         });
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart, });
+      }
+      catch(err){
+
+      }
+        
      
     };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart, history]);
+    
+  stripeToken&&makeRequest()
+  },[cart,history,dispatch,user,stripeToken])
+    
 
 
-  // useEffect(()=>{
-  
-  //   getCartItems()
-  // },[user._id,dispatch])
+ 
 
   
     return (
-        <div className='container p-md-5 p-4'>
+      <div >
+         <div className='container p-md-5 p-4'>
             <h1 className='text-center '>YOUR BAG</h1>
             <div className=' text-center mb-md-5 mb-2'>
-                    Shopping Cart({cart.quantity}))  Wishlist(3)
+                    Shopping Cart({cart.quantity})  Wishlist(3)
                 </div>
             <div className='row'>
                 <div className='col-md-6 col-6'>
@@ -60,8 +90,9 @@ const Cart = () => {
                 <div className='row mt-5'>
                 <div className='col-md-8'>
                     {cart.products.map(c=><CartProduct c={c} key={c._id}/>)}
-                    
-                    
+                   
+      
+   
                 </div>
                 <div className='col-md-4 '>
                     <div className='border border-danger p-2 my-2' >
@@ -73,28 +104,38 @@ const Cart = () => {
 
 
                     <StripeCheckout
-              name="Lama Shop"
-              image="https://avatars.githubusercontent.com/u/1486366?v=4"
+              name="STORIFY"
+              image="/Online-Shopping.svg"
               billingAddress
               shippingAddress
-              description={`Your total is $${cart.total}`}
+              description={`Your total is $  ${cart.total}`}
               amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}
+              
             >
 
                     <button className='btn btn-dark red-section square-button w-100' >CHECK OUT</button>
                     </StripeCheckout>
+                    
                     </div>
                  
                 </div>
+    
                 </div>
                 
            
-
+                
 
             
         </div>
+        <div className="red-section">
+      <NewsLetter/>
+      </div>
+      
+    <Footer/>
+      </div>
+       
     )
 }
 

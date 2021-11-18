@@ -1,4 +1,4 @@
-import { addProducts,initializeCart } from "./cartRedux";
+import { addProducts,initializeCart,clearCartItems } from "./cartRedux";
 
 import { userRequest } from "../../components/axios";
 
@@ -19,3 +19,19 @@ export const getCartItems=async(dispatch,user)=>{
    
     dispatch(initializeCart({products:cartItems.data}))
 }
+
+export const clearCart=async(dispatch,user)=>{
+
+     await userRequest.post(`/cart/clearCart/${user._id}`,{userId:user._id},{withCredentials:true})
+
+    dispatch(clearCartItems())
+}
+
+
+
+// export const clearCart=async(user,dispatch)=>{
+//     console.log("Calling deleting")
+//     // const response = await userRequest.post(`/cart/clearCart/${user._id}`,{userId:user._id},{withCredentials:true})
+//         dispatch(clearCart())
+    
+// }

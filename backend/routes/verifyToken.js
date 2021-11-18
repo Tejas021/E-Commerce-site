@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken")
 
 const verifyToken= async(req,res,next)=>{
     const token=req.cookies.token
-    console.log(req.cookies)
-    console.log("hii")
+    
     if(token){
         jwt.verify(token,process.env.SECRET_KEY,(err,user)=>{
             if(err)res.status(404).json("not Authorized")

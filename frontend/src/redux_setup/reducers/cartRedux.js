@@ -26,6 +26,11 @@ const slice= createSlice({
         },0);
            state.quantity=state.products.length;
        },
+       clearCartItems:(state,action)=>{
+        state.products=state.products.filter(item=>item===0)
+        
+        state.quantity=state.products.length;
+    },
        initializeCart:(state,action)=>{
   
            action.payload.products.map(item=>
@@ -40,6 +45,6 @@ const slice= createSlice({
     }
 })
 
-export const {addProducts,deleteProducts,initializeCart} = slice.actions
+export const {addProducts,deleteProducts,initializeCart,clearCartItems} = slice.actions
 
 export default slice.reducer;

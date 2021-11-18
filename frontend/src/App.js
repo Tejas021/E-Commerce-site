@@ -8,9 +8,8 @@ import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register"
 import Cart from './pages/cart/Cart';
 import ProductList from './pages/ProductsPage/ProductList';
-import NewsLetter from './components/NewsLetter/NewsLetter';
 import SingleProduct from './pages/ProductsPage/SingleProduct';
-import Footer from './components/Footer/Footer';
+
 import {useSelector,useDispatch} from "react-redux";
 import {useEffect} from "react"
 import { publicRequest } from './components/axios';
@@ -19,6 +18,9 @@ import {setUser} from "./redux_setup/reducers/userRedux"
 import { getCartItems } from './redux_setup/reducers/cartApiCalls';
 import PleaseRegister from './pages/PleaseRegister';
 import New404page from './pages/New404page';
+import OrderSuccess from './pages/OrderSuccess';
+
+import Orders from './pages/Orders/Orders';
 function App() {
 const dispatch=useDispatch()
 const user = useSelector(state=>state.user.userInfo)
@@ -48,12 +50,10 @@ const user = useSelector(state=>state.user.userInfo)
         <Route exact path="/cart">{user?<Cart/>:<New404page/>}</Route>
         <Route exact path="/products/:category"><ProductList/></Route>
         <Route exact path="/product/:id">{user?<SingleProduct/>:<PleaseRegister/>}</Route>
+        <Router path="/success"><OrderSuccess/></Router>
+        <Router path="/orders"><Orders user={user}/></Router>
       </Switch>
-      <div className="red-section">
-      <NewsLetter/>
-      </div>
       
-    <Footer/>
     </Router>
 
      
