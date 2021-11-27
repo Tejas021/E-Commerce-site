@@ -6,7 +6,7 @@ require("dotenv").config()
 const app = express();
 
 const corsConfig={
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000',"*"],
     credentials: true,
     optionsSuccessStatus: 200
 }

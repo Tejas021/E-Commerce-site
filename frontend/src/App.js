@@ -26,8 +26,10 @@ const dispatch=useDispatch()
 const user = useSelector(state=>state.user.userInfo)
   useEffect(()=>{
     const verifyUser=async()=>{
-      const getuser=await publicRequest.get("/auth/verify",{withCredentials:true})
+      const TOKEN=localStorage.getItem("token")
+      const getuser=await publicRequest.get("/auth/verify",{headers: {"x-auth-token":`Bearer ${TOKEN}`}})
       dispatch(setUser({user:getuser.data}))
+      
       getCartItems(dispatch,getuser.data)
       
     }

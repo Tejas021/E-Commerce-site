@@ -68,6 +68,7 @@ const handleSignUp=async(e)=>{
   try{
     const user=await publicRequest.post("/auth/register",signUpDetails,{withCredentials: true})
     console.log(user.data)
+    localStorage.setItem("token",user.data.accessToken)
     dispatch(  setUser({user:user.data}))
   }
   catch(err){
